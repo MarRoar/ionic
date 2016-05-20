@@ -178,12 +178,12 @@ export class Select {
   /**
    * @output {any} Any expression you want to evaluate when the selection has changed.
    */
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() selectChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * @output {any} Any expression you want to evaluate when the selection was cancelled.
    */
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
+  @Output() selectCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -239,7 +239,7 @@ export class Select {
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.cancel.emit(null);
+        this.selectCancel.emit(null);
       }
     }];
 
@@ -268,7 +268,7 @@ export class Select {
           text: input.text,
           handler: () => {
             this.onChange(input.value);
-            this.change.emit(input.value);
+            this.selectChange.emit(input.value);
           }
         };
       }));
@@ -307,7 +307,7 @@ export class Select {
         text: this.okText,
         handler: selectedValues => {
           this.onChange(selectedValues);
-          this.change.emit(selectedValues);
+          this.selectChange.emit(selectedValues);
         }
       });
 

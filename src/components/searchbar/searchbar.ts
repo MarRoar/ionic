@@ -15,16 +15,6 @@ import {isPresent, debounce} from '../../util/util';
   selector: '.searchbar-input',
 })
 export class SearchbarInput {
-  @HostListener('input', ['$event'])
-  /**
-   * @private
-   * Don't send the input's input event
-   */
-  private stopInput(ev) {
-    ev.preventDefault();
-    ev.stopPropagation();
-  }
-
   constructor(private _elementRef: ElementRef) {}
 }
 
@@ -40,8 +30,8 @@ export class SearchbarInput {
  * <ion-searchbar
  *   [(ngModel)]="myInput"
  *   [hideCancelButton]="shouldHideCancel"
- *   (input)="onInput($event)"
- *   (cancel)="onCancel($event)">
+ *   (searchbarInput)="onInput($event)"
+ *   (searchbarCancel)="onCancel($event)">
  * </ion-searchbar>
  * ```
  *
@@ -73,7 +63,7 @@ export class Searchbar extends Ion {
   /**
    * @private
    */
-  @ViewChild(SearchbarInput) searchbarInput;
+  @ViewChild(SearchbarInput) searchbarInputEle;
 
   /**
    * @input {string} Sets the cancel button text to the value passed in
@@ -103,27 +93,27 @@ export class Searchbar extends Ion {
   /**
    * @output {event} When the Searchbar input has changed including cleared
    */
-  @Output() input: EventEmitter<Searchbar> = new EventEmitter();
+  @Output() searchbarInput: EventEmitter<Searchbar> = new EventEmitter();
 
   /**
    * @output {event} When the Searchbar input has blurred
    */
-  @Output() blur: EventEmitter<Searchbar> = new EventEmitter();
+  @Output() searchbarBlur: EventEmitter<Searchbar> = new EventEmitter();
 
   /**
    * @output {event} When the Searchbar input has focused
    */
-  @Output() focus: EventEmitter<Searchbar> = new EventEmitter();
+  @Output() searchbarFocus: EventEmitter<Searchbar> = new EventEmitter();
 
   /**
    * @output {event} When the cancel button is clicked
    */
-  @Output() cancel: EventEmitter<Searchbar> = new EventEmitter();
+  @Output() searchbarCancel: EventEmitter<Searchbar> = new EventEmitter();
 
   /**
    * @output {event} When the clear input button is clicked
    */
-  @Output() clear: EventEmitter<Searchbar> = new EventEmitter();
+  @Output() searchbarClear: EventEmitter<Searchbar> = new EventEmitter();
 
   /**
    * @private
@@ -265,7 +255,7 @@ export class Searchbar extends Ion {
     this._tmr = setTimeout(() => {
       this.value = value;
       this.onChange(value);
-      this.input.emit(this);
+      this.searchbarInput.emit(this);
     }, Math.round(this.debounce));
   }
 
@@ -274,7 +264,7 @@ export class Searchbar extends Ion {
    * Sets the Searchbar to focused and aligned left on input focus.
    */
   inputFocused() {
-    this.focus.emit(this);
+    this.searchbarFocus.emit(this);
 
     this.isFocused = true;
     this.shouldLeftAlign = true;
@@ -290,11 +280,11 @@ export class Searchbar extends Ion {
     // blurInput determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this.blurInput === false) {
-      this.searchbarInput._elementRef.nativeElement.focus();
+      this.searchbarInputEle._elementRef.nativeElement.focus();
       this.blurInput = true;
       return;
     }
-    this.blur.emit(this);
+    this.searchbarBlur.emit(this);
 
     this.isFocused = false;
     this.shouldLeftAlign = this.value && this.value.trim() !== '';
@@ -306,11 +296,11 @@ export class Searchbar extends Ion {
    * Clears the input field and triggers the control change.
    */
   clearInput() {
-    this.clear.emit(this);
+    this.searchbarClear.emit(this);
 
     this.value = '';
     this.onChange(this.value);
-    this.input.emit(this);
+    this.searchbarInput.emit(this);
 
     this.blurInput = false;
   }
@@ -322,7 +312,7 @@ export class Searchbar extends Ion {
    * then calls the custom cancel function if the user passed one in.
    */
   cancelSearchbar() {
-    this.cancel.emit(this);
+    this.searchbarCancel.emit(this);
 
     this.clearInput();
     this.blurInput = true;

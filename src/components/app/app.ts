@@ -25,7 +25,7 @@ export class IonicApp {
     private _clickBlock: ClickBlock,
     platform: Platform
   ) {
-    platform.backButton.subscribe(() => {
+    platform.platformBackButton.subscribe(() => {
       let activeNav = this.getActiveNav();
       if (activeNav) {
         if (activeNav.length() === 1) {

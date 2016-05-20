@@ -19,7 +19,7 @@ export class Option {
   /**
    * @input {any} Event to evaluate when option has changed
    */
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() optionSelect: EventEmitter<any> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) {}
 

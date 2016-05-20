@@ -86,7 +86,7 @@ export class RadioGroup {
   /**
    * @output {any} expression to be evaluated when selection has been changed
    */
-  @Output() change: EventEmitter<RadioGroup> = new EventEmitter();
+  @Output() radioChange: EventEmitter<RadioGroup> = new EventEmitter();
 
   constructor(
     private _renderer: Renderer,
@@ -105,7 +105,7 @@ export class RadioGroup {
     if (this._init) {
       this._update();
       this.onTouched();
-      this.change.emit(val);
+      this.radioChange.emit(val);
     }
 
     this._init = true;
@@ -133,7 +133,7 @@ export class RadioGroup {
       this.value = val;
       this._update();
       this.onTouched();
-      this.change.emit(val);
+      this.radioChange.emit(val);
     };
   }
 
@@ -174,7 +174,7 @@ export class RadioGroup {
     this._btns.push(button);
 
     // listen for radiobutton select events
-    button.select.subscribe((val) => {
+    button.radioSelect.subscribe((val) => {
       // this radiobutton has been selected
       this.onChange(val);
     });
@@ -217,7 +217,7 @@ export class RadioGroup {
     this.value = val;
     this._update();
     this.onTouched();
-    this.change.emit(val);
+    this.radioChange.emit(val);
   }
 
   /**

@@ -177,13 +177,13 @@ Platform.register({
 
           // add cordova listeners to emit platform events
           doc.addEventListener('backbutton', function() {
-            p.backButton.emit(null);
+            p.platformBackButton.emit(null);
           });
           doc.addEventListener('pause', function() {
-            p.pause.emit(null);
+            p.platformPause.emit(null);
           });
           doc.addEventListener('resume', function() {
-            p.resume.emit(null);
+            p.platformResume.emit(null);
           });
 
           // cordova has its own exitApp method

@@ -76,7 +76,7 @@ export class RadioButton {
   /**
    * @output {any} expression to be evaluated when selected
    */
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() radioSelect: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
@@ -151,7 +151,7 @@ export class RadioButton {
     ev.stopPropagation();
 
     this.checked = true;
-    this.select.emit(this.value);
+    this.radioSelect.emit(this.value);
   }
 
   /**
