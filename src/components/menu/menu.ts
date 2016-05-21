@@ -283,17 +283,17 @@ export class Menu extends Ion {
   /**
    * @output {event} When the menu is being dragged open.
    */
-  @Output() menuOpening: EventEmitter<number> = new EventEmitter();
+  @Output() menuDrag: EventEmitter<number> = new EventEmitter();
 
   /**
    * @output {event} When the menu has been opened.
    */
-  @Output() menuOpened: EventEmitter<boolean> = new EventEmitter();
+  @Output() menuOpen: EventEmitter<boolean> = new EventEmitter();
 
   /**
    * @output {event} When the menu has been closed.
    */
-  @Output() menuClosed: EventEmitter<boolean> = new EventEmitter();
+  @Output() menuClose: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private _menuCtrl: MenuController,
@@ -444,7 +444,7 @@ export class Menu extends Ion {
     if (this._isEnabled && this._isSwipeEnabled) {
       this._prevent();
       this._getType().setProgessStep(stepValue);
-      this.menuOpening.emit(stepValue);
+      this.menuDrag.emit(stepValue);
     }
   }
 
@@ -490,12 +490,12 @@ export class Menu extends Ion {
 
       if (isOpen) {
         this._cntEle.addEventListener('click', this.onContentClick);
-        this.menuOpened.emit(true);
+        this.menuOpen.emit(true);
 
       } else {
         this.getNativeElement().classList.remove('show-menu');
         this.getBackdropElement().classList.remove('show-backdrop');
-        this.menuClosed.emit(true);
+        this.menuClose.emit(true);
       }
     }
   }

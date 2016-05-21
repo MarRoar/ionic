@@ -320,7 +320,7 @@ export class Platform {
   * app's back button within the navbar is clicked, but this event is only
   * referencing the platform's hardward back button.
   */
-  platformBackButton: EventEmitter<any> = new EventEmitter();
+  backButton: EventEmitter<any> = new EventEmitter();
 
   /**
   * The pause event emits when the native platform puts the application
@@ -328,14 +328,14 @@ export class Platform {
   * application. This event would emit when a Cordova app is put into
   * the background, however, it would not fire on a standard web browser.
   */
-  platformPause: EventEmitter<any> = new EventEmitter();
+  pause: EventEmitter<any> = new EventEmitter();
 
   /**
   * The resume event emits when the native platform pulls the application
   * out from the background. This event would emit when a Cordova app comes
   * out from the background, however, it would not fire on a standard web browser.
   */
-  platformResume: EventEmitter<any> = new EventEmitter();
+  resume: EventEmitter<any> = new EventEmitter();
 
 
   // Getter/Setter Methods

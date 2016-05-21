@@ -1,4 +1,4 @@
-<ion-menu [content]="content" side="left" persistent="true">
+<ion-menu [content]="content" side="left" persistent="true" (menuDrag)="onMenuDrag($event)">
 
   <ion-toolbar secondary>
     <ion-title>Left Menu</ion-title>
